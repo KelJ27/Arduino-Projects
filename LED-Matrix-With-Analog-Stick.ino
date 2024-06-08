@@ -1,9 +1,10 @@
-#define DATA_PIN    8    // Row data line
-#define CLOCK_PIN   9    // Clock sequence
-#define LATCH_PIN   10   // Latch pin
-#define MAX_ROWS    8    // Max number of rows in LED matrix
-#define JOY_X       A0   // X-axis of joystick
-#define JOY_Y       A1   // Y-axis of joystick
+#define DATA_PIN        8    // Row data line
+#define CLOCK_PIN       9    // Clock sequence
+#define LATCH_PIN       10   // Latch pin
+#define MAX_ROWS        8    // Max number of rows in LED matrix
+#define JOY_BUTTON_PIN  2    // Button of the joystick
+#define JOY_X           A0   // X-axis of joystick
+#define JOY_Y           A1   // Y-axis of joystick
 
 const int NUM_ROWS = 8;
 const int NUM_COLUMNS = 8;
@@ -74,11 +75,31 @@ void setLedMatrixGrid()
 {
   for (int i = 0; i <8; i++)
   {
-    shiftOut(DATA_PIN, CLOCK_PIN, LSBFIRST, 255);
-    setColumn(yMap);
+
+    //useRedLeds();
+    //useGreenLeds();
+    useOrangeLeds();
     setRow(xMap);
     store();
   }  
+}
+
+void useRedLeds()
+{
+    shiftOut(DATA_PIN, CLOCK_PIN, LSBFIRST, 255);
+    setColumn(yMap);
+}
+
+void useGreenLeds()
+{
+    setColumn(yMap);
+    shiftOut(DATA_PIN, CLOCK_PIN, LSBFIRST, 255);
+}
+
+void useOrangeLeds()
+{
+  setColumn(yMap);
+  setColumn(yMap);
 }
 
 void clearLedMatrix()
